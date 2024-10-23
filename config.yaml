@@ -1,0 +1,9 @@
+baseURL: "https://raciod.github.com/Raciod-personal/"
+languageCode: "en-us"
+title: "Rachid's Website"
+theme: "PaperMod"
+params:
+  description: "A personal website built with Hugo."
+  showAuthor: true
+  showDate: true
+

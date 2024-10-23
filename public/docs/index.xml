@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Docs on Rachid&#39;s Website</title>
+    <link>http://localhost:1313/docs/</link>
+    <description>Recent content in Docs on Rachid&#39;s Website</description>
+    <generator>Hugo -- 0.136.4</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 23 Oct 2024 15:07:38 +0100</lastBuildDate>
+    <atom:link href="http://localhost:1313/docs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Test</title>
+      <link>http://localhost:1313/docs/test/</link>
+      <pubDate>Wed, 23 Oct 2024 15:07:38 +0100</pubDate>
+      <guid>http://localhost:1313/docs/test/</guid>
+      <description>&lt;h1 id=&#34;this-is-a-test-page&#34;&gt;this is a test page&lt;/h1&gt;
+&lt;p&gt;blalallallalal&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
