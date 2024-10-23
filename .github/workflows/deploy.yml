@@ -33,18 +33,30 @@ jobs:
       - name: Build
         run: /tmp/hugo
 
+      - name: List files in public directory
+        run: ls -la public
+
       - name: Deploy
         if: github.ref == 'refs/heads/main'
         run: |
-          cp -R public/* ${GITHUB_WORKSPACE}/built-site/
-          cd ${GITHUB_WORKSPACE}/built-site
-          git add .
-          git config user.name "${{ github.actor }}"  # Using GitHub actor
-          git config user.email "${{ github.event.pusher.email }}"  # Using pusher email
+          echo "Clearing existing files in built-site..."
+          rm -rf ${GITHUB_WORKSPACE}/built-site/*  # Clear existing files
 
-          # Only commit if there are changes
+          echo "Copying new files to built-site..."
+          cp -R public/* ${GITHUB_WORKSPACE}/built-site/
+          
+          # Navigate to the built-site directory
+          cd ${GITHUB_WORKSPACE}/built-site
+
+          # Check for changes to commit
+          git add .
+          git config user.name "raciod"
+          git config user.email "rachidactivity@gmail.com"
+
           if ! git diff --cached --quiet; then
+            echo "Committing changes..."
             git commit -m 'Updated site'
+            echo "Pushing to gh-pages..."
             git push origin gh-pages || { echo 'Push failed' && exit 1; }
           else
             echo "No changes to commit"
