@@ -1,4 +1,5 @@
 name: Publish to GH Pages
+
 on:
   push:
     branches:
@@ -38,13 +39,13 @@ jobs:
           cp -R public/* ${GITHUB_WORKSPACE}/built-site/
           cd ${GITHUB_WORKSPACE}/built-site
           git add .
-          git config user.name 'raciod'  # Replace with your GitHub username
-          git config user.email 'rachidactivity@gmail.com'  # Replace with your email
-          
+          git config user.name "${{ github.actor }}"  # Using GitHub actor
+          git config user.email "${{ github.event.pusher.email }}"  # Using pusher email
+
           # Only commit if there are changes
           if ! git diff --cached --quiet; then
             git commit -m 'Updated site'
-            git push origin gh-pages  # Specify the branch explicitly
+            git push origin gh-pages || { echo 'Push failed' && exit 1; }
           else
             echo "No changes to commit"
           fi
