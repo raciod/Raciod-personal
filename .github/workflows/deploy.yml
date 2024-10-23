@@ -3,12 +3,15 @@ name: Publish to GH Pages
 on:
   push:
     branches:
-      - main
+      - main  # Triggers the workflow on pushes to the main branch
   pull_request:
+    branches:
+      - main  # Optional: Triggers on pull requests to the main branch
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Use the latest Ubuntu environment
+
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
@@ -26,12 +29,13 @@ jobs:
         run: |
           curl -L -o /tmp/hugo.tar.gz 'https://github.com/gohugoio/hugo/releases/download/v0.136.4/hugo_extended_0.136.4_linux-amd64.tar.gz'
           tar -C /tmp -zxvf /tmp/hugo.tar.gz hugo
+          sudo mv /tmp/hugo /usr/local/bin/
 
       - name: Check Hugo version
-        run: /tmp/hugo version
+        run: hugo version
 
       - name: Build
-        run: /tmp/hugo
+        run: hugo --minify
 
       - name: List files in public directory
         run: ls -la public
@@ -53,11 +57,14 @@ jobs:
           git config user.name "raciod"
           git config user.email "rachidactivity@gmail.com"
 
+          # Debug: show current status
+          git status
+
           if ! git diff --cached --quiet; then
             echo "Committing changes..."
             git commit -m 'Updated site'
             echo "Pushing to gh-pages..."
-            git push origin gh-pages || { echo 'Push failed' && exit 1; }
+            git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/raciod/raciod.github.io.git gh-pages || { echo 'Push failed' && exit 1; }
           else
             echo "No changes to commit"
           fi
